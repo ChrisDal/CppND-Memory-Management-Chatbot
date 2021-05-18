@@ -45,6 +45,58 @@ ChatBot::~ChatBot()
 //// STUDENT CODE
 ////
 
+
+// Copy constructor operator 
+ChatBot::ChatBot(const ChatBot &source)
+{
+    if (source._image == NULL)
+    {
+      _image = source._image;
+    }
+    else 
+    {
+      _image = new wxBitmap(*source._image); 
+    }
+    *_currentNode = *source._currentNode; 
+    *_rootNode = *source._rootNode;
+    *_chatLogic = *source._chatLogic; 
+};
+
+// Copy Assignement operator 
+ChatBot& ChatBot::operator=(const ChatBot& source)
+{
+    std::cout << "[CHATBOT] " << "ASSIGNING content of instance " << &source << " to instance " << this << std::endl;
+    if (this == &source)
+    {
+      return *this; 
+    }
+
+    if (_image != NULL) // Attention: wxWidgets used NULL and not nullptr
+    {
+      delete _image;
+      _image = NULL;
+    }
+    // deep copy 
+    *_image = *source._image; 
+    *_currentNode = *source._currentNode; 
+    *_rootNode = *source._rootNode; 
+    *_chatLogic = *source._chatLogic;
+};
+
+// move constructor 
+ChatBot::ChatBot(ChatBot &&source)
+{
+  std::cout << "[CHATBOT] " << "move constructor ChatBot" << std::endl; 
+  _image = source._image; 
+  _currentNode = source._currentNode;
+  _rootNode    = source._rootNode;
+  _chatLogic   = source._chatLogic;
+  // invalidate source 
+  source._image = NULL;
+  source._currentNode = nullptr; 
+  source._rootNode = nullptr; 
+  source._chatLogic = nullptr; 
+}
 ////
 //// EOF STUDENT CODE
 
