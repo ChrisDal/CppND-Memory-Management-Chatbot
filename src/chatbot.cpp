@@ -20,7 +20,7 @@ ChatBot::ChatBot()
 // constructor WITH memory allocation
 ChatBot::ChatBot(std::string filename)
 {
-    std::cout << entityname <<  " onstructor" << std::endl;
+    std::cout << entityname <<  "Constructor" << std::endl;
     
     // invalidate data handles
     _chatLogic = nullptr;

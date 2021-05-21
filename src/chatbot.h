@@ -38,7 +38,7 @@ public:
     // move constructor 
     ChatBot(ChatBot &&source);
     
-    std::string entityname{"[CHATBOT] "}
+    std::string entityname{"[CHATBOT] "};
     
     ////
     //// EOF STUDENT CODE
