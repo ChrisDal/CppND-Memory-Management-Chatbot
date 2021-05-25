@@ -38,6 +38,9 @@ public:
     // move constructor 
     ChatBot(ChatBot &&source);
     
+    // Move assignement operator
+    ChatBot &operator=(ChatBot&& source);
+    
     std::string entityname{"[CHATBOT] "};
     
     ////

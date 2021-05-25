@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <iostream>
 #include "chatbot.h"
 
 
@@ -18,7 +19,7 @@ private:
 
     // data handles (owned)
     std::vector< std::shared_ptr<GraphEdge> > _childEdges;  // edges to subsequent nodes
-    ChatBot* _chatBot;
+    ChatBot* _chatBot = nullptr; 
 
     // data handles (not owned)
     std::vector<GraphEdge *> _parentEdges; // edges to preceding nodes 
@@ -51,6 +52,7 @@ public:
     //// STUDENT CODE
     ////
 	void AddEdgeToChildNode(std::unique_ptr<GraphEdge> edge);
+    void CreateChatbotHere(); // Create Chatbot Instance 
     void MoveChatbotHere(ChatBot chatbot);
 
     ////

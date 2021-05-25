@@ -11,10 +11,13 @@
 // constructor WITHOUT memory allocation
 ChatBot::ChatBot()
 {
+    std::cout << entityname <<  "Constructor" << std::endl;
+  
     // invalidate data handles
-    _image = nullptr;
+    _image = NULL;
     _chatLogic = nullptr;
     _rootNode = nullptr;
+  
 }
 
 // constructor WITH memory allocation
@@ -28,8 +31,7 @@ ChatBot::ChatBot(std::string filename)
 
     // load image into heap memory
     _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
-  
-    std::cout << entityname << "End Constructor" << std::endl;
+
 }
 
 ChatBot::~ChatBot()
@@ -52,17 +54,17 @@ ChatBot::~ChatBot()
 ChatBot::ChatBot(const ChatBot &source)
 {
   	std::cout << entityname << "Copy C'tor" << std::endl;
-    if (source._image == NULL)
+    if (source._image != NULL)
     {
-      _image = source._image;
-    }
-    else 
-    {
-      _image = new wxBitmap(*source._image); 
-    }
-    *_currentNode = *source._currentNode; 
-    *_rootNode = *source._rootNode;
-    *_chatLogic = *source._chatLogic; 
+      delete _image;
+    }  
+     
+    _image = new wxBitmap(*(source._image));
+
+    _currentNode = source._currentNode; 
+    _rootNode = source._rootNode;
+    _chatLogic = source._chatLogic; 
+    _chatLogic->SetChatbotHandle(this);
   
 };
 
@@ -75,21 +77,18 @@ ChatBot& ChatBot::operator=(const ChatBot& source)
       return *this; 
     }
 
-    if (_image != NULL && _image != nullptr) // Attention: wxWidgets used NULL and not nullptr
+    if (_image != NULL) // Attention: wxWidgets used NULL and not nullptr
     {
       delete _image;
-      _image = NULL;
-    }
-  	else
-  	{
-      _image = new wxBitmap(*source._image);
     }
     
+    _image = new wxBitmap(*(source._image));
+
     // deep copy 
-    *_currentNode = *source._currentNode; 
-    *_rootNode = *source._rootNode; 
-    *_chatLogic = *source._chatLogic;
-    std::cout << entityname << "End Copy Assignment Operator" << std::endl;
+    _currentNode = source._currentNode; 
+    _rootNode = source._rootNode; 
+    _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
   
     return *this;
 };
@@ -98,17 +97,52 @@ ChatBot& ChatBot::operator=(const ChatBot& source)
 ChatBot::ChatBot(ChatBot &&source)
 {
   std::cout << entityname << "Move C'tor" << std::endl; 
+  
   _image = source._image; 
   _currentNode = source._currentNode;
   _rootNode    = source._rootNode;
   _chatLogic   = source._chatLogic;
+  _chatLogic->SetChatbotHandle(this);
+  
   // invalidate source 
   source._image = NULL;
   source._currentNode = nullptr; 
   source._rootNode = nullptr; 
   source._chatLogic = nullptr; 
-  std::cout << entityname << "End Move C'tor" << std::endl;
 }
+
+// move assignement operator 
+ChatBot& ChatBot::operator=(ChatBot&& source)
+{
+    std::cout << entityname << "Move Assignment Operator" << std::endl;
+  
+    if (this == &source)
+    {
+      return *this; 
+    }
+
+    if (_image != NULL) // Attention: wxWidgets used NULL and not nullptr
+    {
+      delete _image;
+      _image = NULL;
+    }
+
+    
+    _image = source._image;
+    _currentNode = source._currentNode; 
+    _rootNode = source._rootNode; 
+    _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+  
+    source._currentNode = nullptr; 
+    source._rootNode = nullptr; 
+    source._chatLogic = nullptr; 
+    source._image = NULL;
+  
+    return *this;
+};
+
+
 ////
 //// EOF STUDENT CODE
 
