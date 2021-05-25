@@ -28,6 +28,8 @@ ChatBot::ChatBot(std::string filename)
 
     // load image into heap memory
     _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
+  
+    std::cout << entityname << "End Constructor" << std::endl;
 }
 
 ChatBot::~ChatBot()
@@ -61,6 +63,7 @@ ChatBot::ChatBot(const ChatBot &source)
     *_currentNode = *source._currentNode; 
     *_rootNode = *source._rootNode;
     *_chatLogic = *source._chatLogic; 
+  
 };
 
 // Copy Assignement operator 
@@ -72,16 +75,23 @@ ChatBot& ChatBot::operator=(const ChatBot& source)
       return *this; 
     }
 
-    if (_image != NULL) // Attention: wxWidgets used NULL and not nullptr
+    if (_image != NULL && _image != nullptr) // Attention: wxWidgets used NULL and not nullptr
     {
       delete _image;
       _image = NULL;
     }
+  	else
+  	{
+      _image = new wxBitmap(*source._image);
+    }
+    
     // deep copy 
-    *_image = *source._image; 
     *_currentNode = *source._currentNode; 
     *_rootNode = *source._rootNode; 
     *_chatLogic = *source._chatLogic;
+    std::cout << entityname << "End Copy Assignment Operator" << std::endl;
+  
+    return *this;
 };
 
 // move constructor 
@@ -97,6 +107,7 @@ ChatBot::ChatBot(ChatBot &&source)
   source._currentNode = nullptr; 
   source._rootNode = nullptr; 
   source._chatLogic = nullptr; 
+  std::cout << entityname << "End Move C'tor" << std::endl;
 }
 ////
 //// EOF STUDENT CODE

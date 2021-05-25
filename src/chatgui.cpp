@@ -2,6 +2,7 @@
 #include <wx/colour.h>
 #include <wx/image.h>
 #include <string>
+#include <iostream>
 #include "chatbot.h"
 #include "chatlogic.h"
 #include "chatgui.h"
@@ -116,7 +117,7 @@ ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
 
     //// STUDENT CODE
     ////
-
+	std::cout << "[CHATGUI] Begin Ctor ChatBotPanelDialog" << std::endl;
     // create chat logic instance
     _chatLogic = std::make_unique<ChatLogic>(); 
 
@@ -125,6 +126,7 @@ ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
 
     // load answer graph from file
     _chatLogic->LoadAnswerGraphFromFile(dataPath + "src/answergraph.txt");
+    std::cout << "[CHATGUI] Ending LoadchatBotpanelDialog" << std::endl;  
 
     ////
     //// EOF STUDENT CODE

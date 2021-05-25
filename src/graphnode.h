@@ -50,8 +50,8 @@ public:
 
     //// STUDENT CODE
     ////
-	void AddEdgeToChildNode(std::shared_ptr<GraphEdge> edge);
-    void MoveChatbotHere(ChatBot* chatbot);
+	void AddEdgeToChildNode(std::unique_ptr<GraphEdge> edge);
+    void MoveChatbotHere(ChatBot chatbot);
 
     ////
     //// EOF STUDENT CODE
