@@ -112,23 +112,23 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                         std::cout << "[CHATLOGIC] AddNode" << std::endl; 
 
                         // check if node with this ID exists already
-                        auto newNode = _nodes.end();
+                        auto it_newNode = _nodes.end();
                         for (auto node = _nodes.begin(); node != _nodes.end(); ++node)
                         {
                             if ((*node)->GetID() == id)
                             {
-                              newNode = node; 
+                              it_newNode = node; 
                             }
                         }
                       
                         // create new element if ID does not yet exist
-                        if (newNode == _nodes.end())
+                        if (it_newNode == _nodes.end())
                         {
-                            _nodes.emplace_back(std::move(std::make_shared<GraphNode>(id)));
-                            newNode = _nodes.end() - 1; // get iterator to last element
+                            _nodes.emplace_back(std::move(std::make_unique<GraphNode>(id)));
+                            it_newNode = _nodes.end() - 1; // get iterator to last element
 
                             // add all answers to current node
-                            AddAllTokensToElement("ANSWER", tokens, **newNode);
+                            AddAllTokensToElement("ANSWER", tokens, **it_newNode);
                         }
 
                         ////
